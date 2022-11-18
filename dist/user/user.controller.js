@@ -14,13 +14,19 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const public_user_fields_dto_1 = require("./dto/public-user-fields.dto");
+const unauthorized_response_decorator_1 = require("../auth/decorators/unauthorized-response.decorator");
 let UserController = class UserController {
     getProfile(req) {
         return Object.assign({}, new public_user_fields_dto_1.PublicUserFieldsDto(req.user));
     }
 };
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'User profile',
+        type: public_user_fields_dto_1.PublicUserFieldsDto,
+    }),
     (0, common_1.Get)('profile'),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -28,6 +34,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getProfile", null);
 UserController = __decorate([
+    (0, swagger_1.ApiTags)('user'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, unauthorized_response_decorator_1.UnauthorizedResponse)('Invalid token, not found user or active session'),
     (0, common_1.Controller)('user')
 ], UserController);
 exports.UserController = UserController;

@@ -7,6 +7,7 @@ import { SessionService } from 'src/session/session.service';
 import { IReadableSession } from 'src/session/interfaces/readable-session.interface';
 import { IReadableToken } from 'src/token/interfaces/readable-token.interface';
 import { TokenUserFieldsDto } from 'src/user/dto/token-user-fields.dto';
+import { LoginUserDto } from 'src/user/dto/login-user.dto';
 export declare class AuthService {
     private userService;
     private tokenService;
@@ -21,6 +22,6 @@ export declare class AuthService {
         user: PublicUserFieldsDto;
     } & IReadableToken>;
     refreshAccessToken(userData: IReadableUser & IReadableSession): Promise<Pick<IReadableToken, 'access'>>;
-    validateUser(email: string, pass: string): Promise<IReadableUser | null>;
+    validateUser(userData: LoginUserDto): Promise<IReadableUser | null>;
     validateTokenPayload(payload: TokenUserFieldsDto & IReadableSession): Promise<IReadableUser & IReadableSession>;
 }

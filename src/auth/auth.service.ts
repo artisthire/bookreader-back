@@ -14,6 +14,7 @@ import { SessionService } from 'src/session/session.service';
 import { IReadableSession } from 'src/session/interfaces/readable-session.interface';
 import { IReadableToken } from 'src/token/interfaces/readable-token.interface';
 import { TokenUserFieldsDto } from 'src/user/dto/token-user-fields.dto';
+import { LoginUserDto } from 'src/user/dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -62,13 +63,11 @@ export class AuthService {
     return await this.tokenService.updateAccessToken(userData);
   }
 
-  async validateUser(
-    email: string,
-    pass: string
-  ): Promise<IReadableUser | null> {
+  async validateUser(userData: LoginUserDto): Promise<IReadableUser | null> {
+    const { email, password } = userData;
     const user = await this.userService.findByEmail(email);
 
-    if (user && (await bcrypt.compare(pass, user.password))) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       return user;
     }
 

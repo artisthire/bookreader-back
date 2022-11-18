@@ -9,26 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PublicUserFieldsDto = void 0;
+exports.ReadableTokenDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-class PublicUserFieldsDto {
-    constructor(model) {
-        this._id = model._id;
-        this.name = model.name;
-        this.email = model.email;
-    }
+class ReadableTokenDto {
 }
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
-], PublicUserFieldsDto.prototype, "_id", void 0);
+], ReadableTokenDto.prototype, "access", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
-], PublicUserFieldsDto.prototype, "name", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], PublicUserFieldsDto.prototype, "email", void 0);
-exports.PublicUserFieldsDto = PublicUserFieldsDto;
-//# sourceMappingURL=public-user-fields.dto.js.map
+], ReadableTokenDto.prototype, "refresh", void 0);
+exports.ReadableTokenDto = ReadableTokenDto;
+//# sourceMappingURL=readable-token.dto.js.map

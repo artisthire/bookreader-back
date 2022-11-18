@@ -42,9 +42,10 @@ let AuthService = class AuthService {
     async refreshAccessToken(userData) {
         return await this.tokenService.updateAccessToken(userData);
     }
-    async validateUser(email, pass) {
+    async validateUser(userData) {
+        const { email, password } = userData;
         const user = await this.userService.findByEmail(email);
-        if (user && (await bcrypt.compare(pass, user.password))) {
+        if (user && (await bcrypt.compare(password, user.password))) {
             return user;
         }
         return null;

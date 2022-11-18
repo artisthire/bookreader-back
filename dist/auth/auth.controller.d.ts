@@ -4,7 +4,6 @@ import { IReadableUser } from 'src/user/interfaces/readable-user.interface';
 import { AuthService } from './auth.service';
 export declare class AuthController {
     private authService;
-    private refreshTokenName;
     constructor(authService: AuthService);
     login(req: {
         user: IReadableUser;
