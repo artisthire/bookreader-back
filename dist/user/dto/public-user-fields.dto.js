@@ -11,24 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PublicUserFieldsDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-class PublicUserFieldsDto {
+const create_user_dto_1 = require("./create-user.dto");
+class PublicUserFieldsDto extends (0, swagger_1.OmitType)(create_user_dto_1.CreateUserDto, [
+    'password',
+]) {
     constructor(model) {
+        super();
         this._id = model._id;
         this.name = model.name;
         this.email = model.email;
     }
 }
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'User MongoDB id' }),
     __metadata("design:type", String)
 ], PublicUserFieldsDto.prototype, "_id", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], PublicUserFieldsDto.prototype, "name", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], PublicUserFieldsDto.prototype, "email", void 0);
 exports.PublicUserFieldsDto = PublicUserFieldsDto;
 //# sourceMappingURL=public-user-fields.dto.js.map

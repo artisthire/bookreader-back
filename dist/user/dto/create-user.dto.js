@@ -45,7 +45,6 @@ __decorate([
         maximum: 30,
         example: 'Querty123',
     }),
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.MinLength)(5),
     (0, class_validator_1.MaxLength)(30),
     (0, class_validator_1.NotContains)(' '),

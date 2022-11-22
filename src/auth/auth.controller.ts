@@ -16,7 +16,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { IReadableSession } from 'src/session/interfaces/readable-session.interface';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LoginUserDto } from 'src/user/dto/login-user.dto';
 import { IReadableUser } from 'src/user/interfaces/readable-user.interface';
@@ -26,6 +25,7 @@ import { Public } from './decorators/public.decorator';
 import { UnauthorizedResponse } from './decorators/unauthorized-response.decorator';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { ValidateUserRequest } from './interfaces/validate-user-request.interface';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -75,7 +75,7 @@ export class AuthController {
   @ApiBearerAuth()
   @Get('logout')
   @HttpCode(204)
-  async logout(@Request() req: { user: IReadableUser & IReadableSession }) {
+  async logout(@Request() req: ValidateUserRequest) {
     await this.authService.logout(req.user.sid);
     return { message: 'Logout success' };
   }
@@ -99,7 +99,7 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Get('refresh')
   @Public()
-  async refresh(@Request() req: { user: IReadableUser & IReadableSession }) {
+  async refresh(@Request() req: ValidateUserRequest) {
     return await this.authService.refreshAccessToken(req.user);
   }
 }

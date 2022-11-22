@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { SessionModule } from './session/session.module';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { SessionModule } from './session/session.module';
     AuthModule,
     TokenModule,
     SessionModule,
+    BooksModule,
   ],
 })
 export class AppModule {}
