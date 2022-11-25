@@ -22,7 +22,7 @@ export class Book {
   @Prop({ default: BookStatus.pending, enum: BookStatus })
   readonly status: BookStatus;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   readonly owner: string;
 
   @Prop({ default: 0 })

@@ -36,7 +36,7 @@ __decorate([
 UserController = __decorate([
     (0, swagger_1.ApiTags)('user'),
     (0, swagger_1.ApiBearerAuth)(),
-    (0, unauthorized_response_decorator_1.UnauthorizedResponse)('Invalid token, not found user or active session'),
+    (0, unauthorized_response_decorator_1.UnauthorizedResponse)('Unauthorized request'),
     (0, common_1.Controller)('user')
 ], UserController);
 exports.UserController = UserController;

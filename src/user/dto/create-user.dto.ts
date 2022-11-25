@@ -10,8 +10,8 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateUserDto {
   @ApiProperty({
     description: 'User name',
-    minimum: 3,
-    maximum: 100,
+    minLength: 3,
+    maxLength: 100,
     example: 'Jhon',
   })
   @MinLength(3)
@@ -21,9 +21,9 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: 'User email',
-    minimum: 10,
-    maximum: 63,
     format: 'email',
+    minLength: 10,
+    maxLength: 63,
   })
   @MinLength(10)
   @MaxLength(63)
@@ -32,8 +32,8 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: 'User password',
-    minimum: 5,
-    maximum: 30,
+    minLength: 5,
+    maxLength: 30,
     example: 'Querty123',
   })
   @MinLength(5)

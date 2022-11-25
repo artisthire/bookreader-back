@@ -16,11 +16,11 @@ const update_book_review_dto_1 = require("./update-book-review.dto");
 class ReadableBookDto extends (0, swagger_1.IntersectionType)(create_book_dto_1.CreateBookDto, update_book_review_dto_1.UpdateBookReviewDto) {
 }
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'MongoDB id' }),
+    (0, swagger_1.ApiProperty)({ description: 'DB id' }),
     __metadata("design:type", String)
 ], ReadableBookDto.prototype, "_id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Book owner MongoDB id' }),
+    (0, swagger_1.ApiProperty)({ description: 'Book owner from DB' }),
     __metadata("design:type", String)
 ], ReadableBookDto.prototype, "owner", void 0);
 exports.ReadableBookDto = ReadableBookDto;

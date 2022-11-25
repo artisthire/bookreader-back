@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const public_user_fields_dto_1 = require("../user/dto/public-user-fields.dto");
 const books_service_1 = require("./books.service");
-const bad_params_response_decorator_1 = require("./decorators/bad-params-response.decorator");
+const bad_params_request_decorator_1 = require("./decorators/bad-params-request.decorator");
 const create_book_dto_1 = require("./dto/create-book.dto");
 const readable_book_dto_1 = require("./dto/readable-book.dto");
 const update_book_review_dto_1 = require("./dto/update-book-review.dto");
@@ -45,22 +45,23 @@ let BooksController = class BooksController {
     }
 };
 __decorate([
-    (0, swagger_1.ApiCreatedResponse)({
-        description: 'Book created',
+    (0, swagger_1.ApiBadRequestResponse)({
+        description: 'Invalid request body',
         schema: {
-            allOf: [
-                {
-                    $ref: (0, swagger_1.getSchemaPath)(readable_book_dto_1.ReadableBookDto),
+            type: 'object',
+            required: ['message', 'statusCode'],
+            properties: {
+                message: {
+                    type: 'string',
                 },
-                {
-                    type: 'object',
-                    properties: {
-                        owner: {
-                            $ref: (0, swagger_1.getSchemaPath)(public_user_fields_dto_1.PublicUserFieldsDto),
-                        },
-                    },
+                statusCode: {
+                    type: 'integer',
                 },
-            ],
+            },
+            example: {
+                message: 'Title must be not empty',
+                statusCode: 400,
+            },
         },
     }),
     (0, swagger_1.ApiConflictResponse)({
@@ -80,6 +81,24 @@ __decorate([
                 message: `Book 'Typescript handbook - Jhon Alexander' existed`,
                 statusCode: 409,
             },
+        },
+    }),
+    (0, swagger_1.ApiCreatedResponse)({
+        description: 'Book created',
+        schema: {
+            allOf: [
+                {
+                    $ref: (0, swagger_1.getSchemaPath)(readable_book_dto_1.ReadableBookDto),
+                },
+                {
+                    type: 'object',
+                    properties: {
+                        owner: {
+                            $ref: (0, swagger_1.getSchemaPath)(public_user_fields_dto_1.PublicUserFieldsDto),
+                        },
+                    },
+                },
+            ],
         },
     }),
     (0, swagger_1.ApiOperation)({ description: 'Create book' }),
@@ -122,7 +141,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "findAll", null);
 __decorate([
-    (0, bad_params_response_decorator_1.BadParamsResponse)({
+    (0, bad_params_request_decorator_1.BadParamsRequest)({
         badResp: 'status must be a valid enum value',
         notFoundResp: 'Book not found',
     }),
@@ -140,7 +159,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "updateStatus", null);
 __decorate([
-    (0, bad_params_response_decorator_1.BadParamsResponse)({
+    (0, bad_params_request_decorator_1.BadParamsRequest)({
         badResp: 'review should not be empty',
         notFoundResp: 'Book not found',
     }),
@@ -158,7 +177,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "updateReview", null);
 __decorate([
-    (0, bad_params_response_decorator_1.BadParamsResponse)({
+    (0, bad_params_request_decorator_1.BadParamsRequest)({
         badResp: `Invalid parameter 'id'`,
         notFoundResp: 'Book not found',
     }),
@@ -176,7 +195,7 @@ __decorate([
 ], BooksController.prototype, "remove", null);
 BooksController = __decorate([
     (0, swagger_1.ApiTags)('books'),
-    (0, unauthorized_response_decorator_1.UnauthorizedResponse)('Invalid login data'),
+    (0, unauthorized_response_decorator_1.UnauthorizedResponse)('Unauthorized request'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('books'),
     __metadata("design:paramtypes", [books_service_1.BooksService])

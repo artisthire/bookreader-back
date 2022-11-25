@@ -5,7 +5,7 @@ import { CreateUserDto } from './create-user.dto';
 export class PublicUserFieldsDto extends OmitType(CreateUserDto, [
   'password',
 ] as const) {
-  @ApiProperty({ description: 'User MongoDB id' })
+  @ApiProperty({ description: 'User id from DB' })
   readonly _id: string;
 
   constructor(model: IReadableUser) {

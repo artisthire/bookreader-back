@@ -1,13 +1,13 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiNotFoundResponse } from '@nestjs/swagger';
 
-export function BadParamsResponse(exampleMessages: {
+export function BadParamsRequest(exampleMessages: {
   badResp: string;
   notFoundResp: string;
 }) {
   return applyDecorators(
     ApiBadRequestResponse({
-      description: 'Parameter missing',
+      description: 'Invalid request body',
       schema: {
         type: 'object',
         required: ['message', 'statusCode'],

@@ -14,8 +14,8 @@ import { BookStatus } from '../types/book-status.type';
 export class CreateBookDto {
   @ApiProperty({
     description: 'Book title',
-    minimum: 1,
-    maximum: 50,
+    minLength: 1,
+    maxLength: 50,
     example: 'Typescript handbook',
   })
   @IsNotEmpty()
@@ -24,8 +24,8 @@ export class CreateBookDto {
 
   @ApiProperty({
     description: 'Book author',
-    minimum: 1,
-    maximum: 50,
+    minLength: 1,
+    maxLength: 50,
     example: 'Jhon Alexander',
   })
   @IsNotEmpty()
@@ -35,9 +35,10 @@ export class CreateBookDto {
 
   @ApiPropertyOptional({
     description: 'Book publication year',
+    type: 'integer',
     minimum: 1000,
     maximum: new Date().getFullYear(),
-    example: '2022',
+    example: 2022,
   })
   @IsInt()
   @Min(1000)
@@ -46,9 +47,10 @@ export class CreateBookDto {
 
   @ApiProperty({
     description: 'Book pages count',
+    type: 'integer',
     minimum: 1,
     maximum: 9999,
-    example: '100',
+    example: 100,
   })
   @IsInt()
   @Min(1)

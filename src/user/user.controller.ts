@@ -7,7 +7,7 @@ import { UnauthorizedResponse } from 'src/auth/decorators/unauthorized-response.
 
 @ApiTags('user')
 @ApiBearerAuth()
-@UnauthorizedResponse('Invalid token, not found user or active session')
+@UnauthorizedResponse('Unauthorized request')
 @Controller('user')
 export class UserController {
   @ApiOkResponse({

@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", String)
 ], Book.prototype, "status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.ObjectId, ref: 'User' }),
+    (0, mongoose_1.Prop)({ required: true, type: mongoose_2.default.Schema.Types.ObjectId, ref: 'User' }),
     __metadata("design:type", String)
 ], Book.prototype, "owner", void 0);
 __decorate([

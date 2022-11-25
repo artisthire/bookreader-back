@@ -9,6 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
@@ -22,7 +23,7 @@ import {
 import { ValidateUserRequest } from 'src/auth/interfaces/validate-user-request.interface';
 import { PublicUserFieldsDto } from 'src/user/dto/public-user-fields.dto';
 import { BooksService } from './books.service';
-import { BadParamsResponse } from './decorators/bad-params-response.decorator';
+import { BadParamsRequest } from './decorators/bad-params-request.decorator';
 import { CreateBookDto } from './dto/create-book.dto';
 import { ReadableBookDto } from './dto/readable-book.dto';
 import { UpdateBookReviewDto } from './dto/update-book-review.dto';
@@ -31,28 +32,29 @@ import { UnauthorizedResponse } from 'src/auth/decorators/unauthorized-response.
 import { ValidateMongoId } from './pipes/validate-mongo-id.pipe';
 
 @ApiTags('books')
-@UnauthorizedResponse('Invalid login data')
+@UnauthorizedResponse('Unauthorized request')
 @ApiBearerAuth()
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
-  @ApiCreatedResponse({
-    description: 'Book created',
+  @ApiBadRequestResponse({
+    description: 'Invalid request body',
     schema: {
-      allOf: [
-        {
-          $ref: getSchemaPath(ReadableBookDto),
+      type: 'object',
+      required: ['message', 'statusCode'],
+      properties: {
+        message: {
+          type: 'string',
         },
-        {
-          type: 'object',
-          properties: {
-            owner: {
-              $ref: getSchemaPath(PublicUserFieldsDto),
-            },
-          },
+        statusCode: {
+          type: 'integer',
         },
-      ],
+      },
+      example: {
+        message: 'Title must be not empty',
+        statusCode: 400,
+      },
     },
   })
   @ApiConflictResponse({
@@ -72,6 +74,24 @@ export class BooksController {
         message: `Book 'Typescript handbook - Jhon Alexander' existed`,
         statusCode: 409,
       },
+    },
+  })
+  @ApiCreatedResponse({
+    description: 'Book created',
+    schema: {
+      allOf: [
+        {
+          $ref: getSchemaPath(ReadableBookDto),
+        },
+        {
+          type: 'object',
+          properties: {
+            owner: {
+              $ref: getSchemaPath(PublicUserFieldsDto),
+            },
+          },
+        },
+      ],
     },
   })
   @ApiOperation({ description: 'Create book' })
@@ -112,7 +132,7 @@ export class BooksController {
     return await this.booksService.findAllByOwner(req.user);
   }
 
-  @BadParamsResponse({
+  @BadParamsRequest({
     badResp: 'status must be a valid enum value',
     notFoundResp: 'Book not found',
   })
@@ -134,7 +154,7 @@ export class BooksController {
     );
   }
 
-  @BadParamsResponse({
+  @BadParamsRequest({
     badResp: 'review should not be empty',
     notFoundResp: 'Book not found',
   })
@@ -156,7 +176,7 @@ export class BooksController {
     );
   }
 
-  @BadParamsResponse({
+  @BadParamsRequest({
     badResp: `Invalid parameter 'id'`,
     notFoundResp: 'Book not found',
   })

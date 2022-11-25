@@ -15,6 +15,7 @@ const auth_module_1 = require("./auth/auth.module");
 const token_module_1 = require("./token/token.module");
 const session_module_1 = require("./session/session.module");
 const books_module_1 = require("./books/books.module");
+const training_module_1 = require("./training/training.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -29,6 +30,7 @@ AppModule = __decorate([
             token_module_1.TokenModule,
             session_module_1.SessionModule,
             books_module_1.BooksModule,
+            training_module_1.TrainingModule,
         ],
     })
 ], AppModule);

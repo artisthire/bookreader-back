@@ -23,7 +23,7 @@ class PublicUserFieldsDto extends (0, swagger_1.OmitType)(create_user_dto_1.Crea
     }
 }
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'User MongoDB id' }),
+    (0, swagger_1.ApiProperty)({ description: 'User id from DB' }),
     __metadata("design:type", String)
 ], PublicUserFieldsDto.prototype, "_id", void 0);
 exports.PublicUserFieldsDto = PublicUserFieldsDto;

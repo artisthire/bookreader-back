@@ -15,9 +15,9 @@ let ValidateMongoId = class ValidateMongoId {
             if (String(new mongodb_1.ObjectId(value)) === value) {
                 return value;
             }
-            throw new common_1.BadRequestException(`Invalid parameter 'id'`);
+            throw new common_1.BadRequestException(`Invalid Mongo Id`);
         }
-        throw new common_1.BadRequestException(`Invalid parameter 'id'`);
+        throw new common_1.BadRequestException(`Invalid Mongo Id`);
     }
 };
 ValidateMongoId = __decorate([

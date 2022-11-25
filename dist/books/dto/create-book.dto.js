@@ -18,8 +18,8 @@ class CreateBookDto {
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Book title',
-        minimum: 1,
-        maximum: 50,
+        minLength: 1,
+        maxLength: 50,
         example: 'Typescript handbook',
     }),
     (0, class_validator_1.IsNotEmpty)(),
@@ -29,8 +29,8 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Book author',
-        minimum: 1,
-        maximum: 50,
+        minLength: 1,
+        maxLength: 50,
         example: 'Jhon Alexander',
     }),
     (0, class_validator_1.IsNotEmpty)(),
@@ -41,9 +41,10 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         description: 'Book publication year',
+        type: 'integer',
         minimum: 1000,
         maximum: new Date().getFullYear(),
-        example: '2022',
+        example: 2022,
     }),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(1000),
@@ -53,9 +54,10 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Book pages count',
+        type: 'integer',
         minimum: 1,
         maximum: 9999,
-        example: '100',
+        example: 100,
     }),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(1),

@@ -9,8 +9,8 @@ export class ValidateMongoId implements PipeTransform<string, string> {
         return value;
       }
 
-      throw new BadRequestException(`Invalid parameter 'id'`);
+      throw new BadRequestException(`Invalid Mongo Id`);
     }
-    throw new BadRequestException(`Invalid parameter 'id'`);
+    throw new BadRequestException(`Invalid Mongo Id`);
   }
 }

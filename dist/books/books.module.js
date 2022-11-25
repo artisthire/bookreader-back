@@ -21,6 +21,7 @@ BooksModule = __decorate([
         ],
         controllers: [books_controller_1.BooksController],
         providers: [books_service_1.BooksService],
+        exports: [books_service_1.BooksService],
     })
 ], BooksModule);
 exports.BooksModule = BooksModule;

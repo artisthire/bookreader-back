@@ -17,10 +17,12 @@ class UpdateBookReviewDto {
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Book rating',
+        type: 'integer',
         minimum: 0,
         maximum: 5,
         example: 5,
     }),
+    (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(0),
     (0, class_validator_1.Max)(5),
     __metadata("design:type", Number)
@@ -28,8 +30,8 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Book rewiev',
-        minimum: 1,
-        maximum: 50,
+        minLength: 1,
+        maxLength: 50,
         example: 'Amazing book',
     }),
     (0, class_validator_1.IsNotEmpty)(),
