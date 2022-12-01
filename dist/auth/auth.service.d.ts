@@ -1,3 +1,4 @@
+import { Profile } from 'passport-google-oauth20';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { IReadableUser } from 'src/user/interfaces/readable-user.interface';
 import { UserService } from 'src/user/user.service';
@@ -21,6 +22,7 @@ export declare class AuthService {
     register(createUserDto: CreateUserDto): Promise<{
         user: PublicUserFieldsDto;
     } & IReadableToken>;
+    loginGoogle(googleUser: Profile): Promise<IReadableToken>;
     refreshAccessToken(userData: IReadableUser & IReadableSession): Promise<Pick<IReadableToken, 'access'>>;
     validateUser(userData: LoginUserDto): Promise<IReadableUser | null>;
     validateTokenPayload(payload: TokenUserFieldsDto & IReadableSession): Promise<IReadableUser & IReadableSession>;

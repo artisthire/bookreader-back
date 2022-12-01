@@ -11,6 +11,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { SessionModule } from 'src/session/session.module';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { GoogleAuthStrategy } from './strategies/google-oauth.strategy';
 
 @Module({
   imports: [UserModule, TokenModule, SessionModule, PassportModule],
@@ -19,6 +20,7 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
     LocalStrategy,
     JwtStrategy,
     JwtRefreshStrategy,
+    GoogleAuthStrategy,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

@@ -1,3 +1,5 @@
+import { Response } from 'express';
+import { Profile } from 'passport-google-oauth20';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { IReadableUser } from 'src/user/interfaces/readable-user.interface';
 import { AuthService } from './auth.service';
@@ -17,4 +19,8 @@ export declare class AuthController {
         message: string;
     }>;
     refresh(req: ValidateUserRequest): Promise<Pick<import("../token/interfaces/readable-token.interface").IReadableToken, "access">>;
+    googleAuth(): Promise<null>;
+    googleAuthRedirect(req: {
+        user: Profile;
+    }, resp: Response): Promise<void>;
 }

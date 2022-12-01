@@ -6,6 +6,7 @@ import {
   HttpCode,
   UseGuards,
   Body,
+  Res,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -15,6 +16,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { Response } from 'express';
+import { Profile } from 'passport-google-oauth20';
 
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LoginUserDto } from 'src/user/dto/login-user.dto';
@@ -23,6 +26,7 @@ import { AuthService } from './auth.service';
 import { LoginResponse } from './decorators/login-response.decorator';
 import { Public } from './decorators/public.decorator';
 import { UnauthorizedResponse } from './decorators/unauthorized-response.decorator';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { ValidateUserRequest } from './interfaces/validate-user-request.interface';
@@ -101,5 +105,28 @@ export class AuthController {
   @Public()
   async refresh(@Request() req: ValidateUserRequest) {
     return await this.authService.refreshAccessToken(req.user);
+  }
+
+  @ApiOperation({ description: 'Google validate user' })
+  @UseGuards(GoogleAuthGuard)
+  @HttpCode(204)
+  @Get('google')
+  @Public()
+  async googleAuth() {
+    return null;
+  }
+
+  @ApiOperation({ description: 'Login user by google auth info' })
+  @UseGuards(GoogleAuthGuard)
+  @Get('google/redirect')
+  @Public()
+  async googleAuthRedirect(
+    @Request() req: { user: Profile },
+    @Res() resp: Response
+  ) {
+    const { access, refresh } = await this.authService.loginGoogle(req.user);
+    resp.redirect(
+      `${process.env.FRONT_URL}/google-redirect?accessToken=${access}&refreshToken=${refresh}`
+    );
   }
 }

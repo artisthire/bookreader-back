@@ -19,6 +19,7 @@ const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
 const jwt_strategy_1 = require("./strategies/jwt.strategy");
 const session_module_1 = require("../session/session.module");
 const jwt_refresh_strategy_1 = require("./strategies/jwt-refresh.strategy");
+const google_oauth_strategy_1 = require("./strategies/google-oauth.strategy");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -29,6 +30,7 @@ AuthModule = __decorate([
             local_strategy_1.LocalStrategy,
             jwt_strategy_1.JwtStrategy,
             jwt_refresh_strategy_1.JwtRefreshStrategy,
+            google_oauth_strategy_1.GoogleAuthStrategy,
             {
                 provide: core_1.APP_GUARD,
                 useClass: jwt_auth_guard_1.JwtAuthGuard,

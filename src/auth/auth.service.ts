@@ -4,6 +4,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
+import { Profile } from 'passport-google-oauth20';
+import { v4 as uuidv4 } from 'uuid';
 
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { IReadableUser } from 'src/user/interfaces/readable-user.interface';
@@ -55,6 +57,26 @@ export class AuthService {
     }
 
     return await this.login(user);
+  }
+
+  async loginGoogle(googleUser: Profile): Promise<IReadableToken> {
+    const { email, name } = googleUser._json;
+
+    if (!email || !name) {
+      throw new UnauthorizedException('Not provided email or user name');
+    }
+
+    const user = await this.userService.findByEmail(email);
+
+    if (user) {
+      const { access, refresh } = await this.login(user);
+      return { access, refresh };
+    }
+
+    const newUser = { email, name, password: uuidv4() };
+
+    const { access, refresh } = await this.register(newUser);
+    return { access, refresh };
   }
 
   async refreshAccessToken(

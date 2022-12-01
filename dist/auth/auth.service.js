@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const bcrypt = require("bcryptjs");
+const uuid_1 = require("uuid");
 const user_service_1 = require("../user/user.service");
 const token_service_1 = require("../token/token.service");
 const public_user_fields_dto_1 = require("../user/dto/public-user-fields.dto");
@@ -38,6 +39,20 @@ let AuthService = class AuthService {
             throw new common_1.ConflictException('Email in use');
         }
         return await this.login(user);
+    }
+    async loginGoogle(googleUser) {
+        const { email, name } = googleUser._json;
+        if (!email || !name) {
+            throw new common_1.UnauthorizedException('Not provided email or user name');
+        }
+        const user = await this.userService.findByEmail(email);
+        if (user) {
+            const { access, refresh } = await this.login(user);
+            return { access, refresh };
+        }
+        const newUser = { email, name, password: (0, uuid_1.v4)() };
+        const { access, refresh } = await this.register(newUser);
+        return { access, refresh };
     }
     async refreshAccessToken(userData) {
         return await this.tokenService.updateAccessToken(userData);

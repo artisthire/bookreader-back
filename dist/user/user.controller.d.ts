@@ -4,7 +4,7 @@ export declare class UserController {
         user: IReadableUser;
     }): {
         _id: string;
-        name: string;
         email: string;
+        name: string;
     };
 }

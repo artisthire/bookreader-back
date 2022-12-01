@@ -21,6 +21,7 @@ const auth_service_1 = require("./auth.service");
 const login_response_decorator_1 = require("./decorators/login-response.decorator");
 const public_decorator_1 = require("./decorators/public.decorator");
 const unauthorized_response_decorator_1 = require("./decorators/unauthorized-response.decorator");
+const google_auth_guard_1 = require("./guards/google-auth.guard");
 const jwt_refresh_guard_1 = require("./guards/jwt-refresh.guard");
 const local_auth_guard_1 = require("./guards/local-auth.guard");
 let AuthController = class AuthController {
@@ -39,6 +40,13 @@ let AuthController = class AuthController {
     }
     async refresh(req) {
         return await this.authService.refreshAccessToken(req.user);
+    }
+    async googleAuth() {
+        return null;
+    }
+    async googleAuthRedirect(req, resp) {
+        const { access, refresh } = await this.authService.loginGoogle(req.user);
+        resp.redirect(`${process.env.FRONT_URL}/google-redirect?accessToken=${access}&refreshToken=${refresh}`);
     }
 };
 __decorate([
@@ -119,6 +127,27 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "refresh", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ description: 'Google validate user' }),
+    (0, common_1.UseGuards)(google_auth_guard_1.GoogleAuthGuard),
+    (0, common_1.HttpCode)(204),
+    (0, common_1.Get)('google'),
+    (0, public_decorator_1.Public)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "googleAuth", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ description: 'Login user by google auth info' }),
+    (0, common_1.UseGuards)(google_auth_guard_1.GoogleAuthGuard),
+    (0, common_1.Get)('google/redirect'),
+    (0, public_decorator_1.Public)(),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "googleAuthRedirect", null);
 AuthController = __decorate([
     (0, swagger_1.ApiTags)('auth'),
     (0, common_1.Controller)('auth'),
