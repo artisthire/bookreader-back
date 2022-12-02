@@ -14,6 +14,7 @@ import {
   ApiBody,
   ApiOkResponse,
   ApiOperation,
+  ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -49,7 +50,6 @@ export class AuthController {
 
   @ApiOperation({ description: 'Register user' })
   @ApiBody({ type: CreateUserDto })
-  @LoginResponse(201)
   @ApiBadRequestResponse({
     description: 'Parameter missing',
     schema: {
@@ -69,6 +69,7 @@ export class AuthController {
       },
     },
   })
+  @LoginResponse(201)
   @Post('register')
   @Public()
   async register(@Body() createUserDto: CreateUserDto) {
@@ -107,16 +108,29 @@ export class AuthController {
     return await this.authService.refreshAccessToken(req.user);
   }
 
-  @ApiOperation({ description: 'Google validate user' })
+  @ApiOperation({ description: 'Redirect to page google authorization' })
   @UseGuards(GoogleAuthGuard)
-  @HttpCode(204)
+  @HttpCode(302)
   @Get('google')
   @Public()
   async googleAuth() {
     return null;
   }
 
-  @ApiOperation({ description: 'Login user by google auth info' })
+  @ApiOperation({
+    description:
+      'Singin user afrer google authoriazation and return access and refresh token in URL query parameters',
+  })
+  @ApiProduces('text/plain')
+  @ApiOkResponse({
+    description: `Return to fron page '/google-redirect' tokens in query parameters. Access token in 'accessToken' parameter, refresh token in 'refreshToken' parameter`,
+    schema: {
+      type: 'string',
+      example:
+        'https://example.com/google-redirect/?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9D&refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV',
+    },
+  })
+  @UnauthorizedResponse('Not provided email or user name from google service')
   @UseGuards(GoogleAuthGuard)
   @Get('google/redirect')
   @Public()

@@ -65,7 +65,6 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiOperation)({ description: 'Register user' }),
     (0, swagger_1.ApiBody)({ type: create_user_dto_1.CreateUserDto }),
-    (0, login_response_decorator_1.LoginResponse)(201),
     (0, swagger_1.ApiBadRequestResponse)({
         description: 'Parameter missing',
         schema: {
@@ -85,6 +84,7 @@ __decorate([
             },
         },
     }),
+    (0, login_response_decorator_1.LoginResponse)(201),
     (0, common_1.Post)('register'),
     (0, public_decorator_1.Public)(),
     __param(0, (0, common_1.Body)()),
@@ -128,9 +128,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "refresh", null);
 __decorate([
-    (0, swagger_1.ApiOperation)({ description: 'Google validate user' }),
+    (0, swagger_1.ApiOperation)({ description: 'Redirect to page google authorization' }),
     (0, common_1.UseGuards)(google_auth_guard_1.GoogleAuthGuard),
-    (0, common_1.HttpCode)(204),
+    (0, common_1.HttpCode)(302),
     (0, common_1.Get)('google'),
     (0, public_decorator_1.Public)(),
     __metadata("design:type", Function),
@@ -138,7 +138,18 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "googleAuth", null);
 __decorate([
-    (0, swagger_1.ApiOperation)({ description: 'Login user by google auth info' }),
+    (0, swagger_1.ApiOperation)({
+        description: 'Singin user afrer google authoriazation and return access and refresh token in URL query parameters',
+    }),
+    (0, swagger_1.ApiProduces)('text/plain'),
+    (0, swagger_1.ApiOkResponse)({
+        description: `Return to fron page '/google-redirect' tokens in query parameters. Access token in 'accessToken' parameter, refresh token in 'refreshToken' parameter`,
+        schema: {
+            type: 'string',
+            example: 'https://example.com/google-redirect/?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9D&refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV',
+        },
+    }),
+    (0, unauthorized_response_decorator_1.UnauthorizedResponse)('Not provided email or user name from google service'),
     (0, common_1.UseGuards)(google_auth_guard_1.GoogleAuthGuard),
     (0, common_1.Get)('google/redirect'),
     (0, public_decorator_1.Public)(),

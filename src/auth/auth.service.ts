@@ -63,7 +63,9 @@ export class AuthService {
     const { email, name } = googleUser._json;
 
     if (!email || !name) {
-      throw new UnauthorizedException('Not provided email or user name');
+      throw new UnauthorizedException(
+        'Not provided email or user name from google service'
+      );
     }
 
     const user = await this.userService.findByEmail(email);

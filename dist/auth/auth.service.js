@@ -43,7 +43,7 @@ let AuthService = class AuthService {
     async loginGoogle(googleUser) {
         const { email, name } = googleUser._json;
         if (!email || !name) {
-            throw new common_1.UnauthorizedException('Not provided email or user name');
+            throw new common_1.UnauthorizedException('Not provided email or user name from google service');
         }
         const user = await this.userService.findByEmail(email);
         if (user) {
