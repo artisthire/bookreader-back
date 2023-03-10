@@ -108,29 +108,41 @@ export class AuthController {
     return await this.authService.refreshAccessToken(req.user);
   }
 
-  @ApiOperation({ description: 'Redirect to page google authorization' })
-  @UseGuards(GoogleAuthGuard)
-  @HttpCode(302)
-  @Get('google')
-  @Public()
-  async googleAuth() {
-    return null;
-  }
-
   @ApiOperation({
-    description:
-      'Singin user afrer google authoriazation and return access and refresh token in URL query parameters',
+    description: `Google authentication. WARNING: Works only for sign-in, after registered on front-end (if you're writing your back-end for a SPECIFIC front-end, then you can configure it right to work both for sign-up & sign-in)`,
   })
-  @ApiProduces('text/plain')
+  @UseGuards(GoogleAuthGuard)
   @ApiOkResponse({
-    description: `Return to fron page '/google-redirect' tokens in query parameters. Access token in 'accessToken' parameter, refresh token in 'refreshToken' parameter`,
+    description: `Successful operation (redirect to front-end with accessToken, refreshToken in query). Then use GET /user`,
     schema: {
       type: 'string',
       example:
         'https://example.com/google-redirect/?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9D&refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV',
     },
   })
-  @UnauthorizedResponse('Not provided email or user name from google service')
+  @UnauthorizedResponse(
+    'Not provided or invalid credentials for google service'
+  )
+  @Get('google')
+  @Public()
+  async googleAuth() {
+    return null;
+  }
+
+  // @ApiOperation({
+  //   description:
+  //     'Singin user afrer google authoriazation and return access and refresh token in URL query parameters',
+  // })
+  // @ApiProduces('text/plain')
+  // @ApiOkResponse({
+  //   description: `Return to fron page '/google-redirect' tokens in query parameters. Access token in 'accessToken' parameter, refresh token in 'refreshToken' parameter`,
+  //   schema: {
+  //     type: 'string',
+  //     example:
+  //       'https://example.com/google-redirect/?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9D&refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV',
+  //   },
+  // })
+  // @UnauthorizedResponse('Not provided email or user name from google service')
   @UseGuards(GoogleAuthGuard)
   @Get('google/redirect')
   @Public()
