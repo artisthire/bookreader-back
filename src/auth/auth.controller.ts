@@ -12,7 +12,7 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiBody,
-  ApiHideProperty,
+  ApiExcludeEndpoint,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -143,7 +143,7 @@ export class AuthController {
   //   },
   // })
   // @UnauthorizedResponse('Not provided email or user name from google service')
-  @ApiHideProperty()
+  @ApiExcludeEndpoint()
   @UseGuards(GoogleAuthGuard)
   @Get('google/redirect')
   @Public()
