@@ -12,9 +12,9 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiBody,
+  ApiHideProperty,
   ApiOkResponse,
   ApiOperation,
-  ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -143,6 +143,7 @@ export class AuthController {
   //   },
   // })
   // @UnauthorizedResponse('Not provided email or user name from google service')
+  @ApiHideProperty()
   @UseGuards(GoogleAuthGuard)
   @Get('google/redirect')
   @Public()
