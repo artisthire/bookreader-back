@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -12,6 +8,7 @@ import { CreateTrainingDto } from './dto/create-training.dto';
 import { ReadableTrainingDto } from './dto/readable-training.dto';
 import { UpdateResultDto } from './dto/update-result.dto';
 import { BooksService } from 'src/books/books.service';
+import { NoContentException } from 'src/books/exceptions/no-content.exception';
 
 @Injectable()
 export class TrainingService {
@@ -32,9 +29,7 @@ export class TrainingService {
     const notExistInBooksDB = books.filter(id => !booksIdByOwner.includes(id));
 
     if (notExistInBooksDB?.length) {
-      throw new NotFoundException(
-        `Not found books id: ${notExistInBooksDB.join(', ')}`
-      );
+      throw new NoContentException();
     }
 
     const startDate = new Date(start);
@@ -64,7 +59,7 @@ export class TrainingService {
       .lean();
 
     if (!training) {
-      throw new NotFoundException('Training not found');
+      throw new NoContentException();
     }
 
     return training;
@@ -79,7 +74,7 @@ export class TrainingService {
     })) as TrainingDocument;
 
     if (!training) {
-      throw new NotFoundException('Training not found');
+      throw new NoContentException();
     }
 
     const { start, finish } = training;

@@ -1,5 +1,5 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiNotFoundResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiNoContentResponse } from '@nestjs/swagger';
 
 export function BadParamsRequest(exampleMessages: {
   badResp: string;
@@ -25,7 +25,7 @@ export function BadParamsRequest(exampleMessages: {
         },
       },
     }),
-    ApiNotFoundResponse({
+    ApiNoContentResponse({
       description: 'Data not found by user or id',
       schema: {
         type: 'object',
@@ -40,7 +40,7 @@ export function BadParamsRequest(exampleMessages: {
         },
         example: {
           message: exampleMessages.notFoundResp,
-          statusCode: 404,
+          statusCode: 204,
         },
       },
     })

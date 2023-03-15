@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -12,6 +8,7 @@ import { IReadableUser } from 'src/user/interfaces/readable-user.interface';
 import { UpdateBookStatusDto } from './dto/update-book-status.dto';
 import { UpdateBookReviewDto } from './dto/update-book-review.dto';
 import { ReadableBookDto } from './dto/readable-book.dto';
+import { NoContentException } from './exceptions/no-content.exception';
 
 @Injectable()
 export class BooksService {
@@ -44,7 +41,7 @@ export class BooksService {
     const books = await this.bookModel.find({ owner: user._id }).lean();
 
     if (!books || !books.length) {
-      throw new NotFoundException('Books not found');
+      throw new NoContentException();
     }
 
     return books;
@@ -62,7 +59,7 @@ export class BooksService {
       .lean();
 
     if (!book) {
-      throw new NotFoundException('Book not found');
+      throw new NoContentException();
     }
 
     return book;
@@ -84,7 +81,7 @@ export class BooksService {
       .lean();
 
     if (!book) {
-      throw new NotFoundException('Book not found');
+      throw new NoContentException();
     }
 
     return book;
@@ -96,7 +93,7 @@ export class BooksService {
       .lean();
 
     if (!book) {
-      throw new NotFoundException('Book not found');
+      throw new NoContentException();
     }
 
     return book;

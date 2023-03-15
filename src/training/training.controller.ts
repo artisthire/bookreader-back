@@ -2,7 +2,7 @@ import { Body, Controller, Get, Patch, Post, Request } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
-  ApiNotFoundResponse,
+  ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -56,7 +56,7 @@ export class TrainingController {
     return await this.trainingService.create(createTrainingDto, req.user);
   }
 
-  @ApiNotFoundResponse({
+  @ApiNoContentResponse({
     description: 'Training not found',
     schema: {
       type: 'object',
@@ -71,7 +71,7 @@ export class TrainingController {
       },
       example: {
         message: 'Training not found',
-        statusCode: 404,
+        statusCode: 204,
       },
     },
   })

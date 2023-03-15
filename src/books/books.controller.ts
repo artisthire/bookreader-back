@@ -13,7 +13,7 @@ import {
   ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
-  ApiNotFoundResponse,
+  ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -103,7 +103,7 @@ export class BooksController {
     return await this.booksService.create(createBookDto, req.user);
   }
 
-  @ApiNotFoundResponse({
+  @ApiNoContentResponse({
     description: 'Books not found',
     schema: {
       type: 'object',
