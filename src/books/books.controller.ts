@@ -118,7 +118,7 @@ export class BooksController {
       },
       example: {
         message: 'Book not found',
-        statusCode: 404,
+        statusCode: 204,
       },
     },
   })
